@@ -16,14 +16,14 @@ router.get("/", (req, res) => {
 });
 
 // GET single user by ID 
-router.get("/:id", (req, res) => {
+router.get("/:identifier", (req, res) => {
   const studentFilePath = path.join(__dirname, "/students.json");
   const fileAsABuffer = fs.readFileSync(studentFilePath);
   const fileAsAString = fileAsABuffer.toString();
   const studentsArray = JSON.parse(fileAsAString);
   const idComingFromRequest = req.params.identifier;
   console.log(idComingFromRequest);
-  const student = studentsArray.filter((student) => student.id === idComingFromRequest);
+  const student = studentsArray.filter((student) => student.id == idComingFromRequest);
   console.log(student);
   res.send(student);
 });
