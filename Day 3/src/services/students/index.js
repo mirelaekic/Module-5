@@ -111,7 +111,7 @@ router.delete("/:id", (req, res, next) => {
     const newDb = studentsDB.filter(student => student.ID !== req.params.id)
     fs.writeFileSync(path.join(__dirname, "studentPortfolio.json"), JSON.stringify(newDb))
 
-    res.status(204).send()
+    res.status(200).send("student deleted")
   } catch (error) {
     next(error)
   }
