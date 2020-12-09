@@ -64,9 +64,14 @@ router.post(
       .withMessage("Insert a description please!"),
   ],
   [
-    check("creationDate")
+    check("repoURL")
       .exists()
-      .withMessage("Insert a creation date please!"),
+      .withMessage("Insert a repository URL please!"),
+  ],
+  [
+    check("liveURL")
+      .exists()
+      .withMessage("Insert a repository URL please!"),
   ],
   (req, res, next) => {
     try {
