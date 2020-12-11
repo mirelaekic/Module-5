@@ -133,11 +133,4 @@ router.put("/:id", async (req, res, next) => {
   }
 })
 
-
-
-
-//const products =read products.josn
-// const reviews = read reviews.json
-
-
 module.exports = router
