@@ -6,7 +6,7 @@ const cors = require("cors")
 const productRoutes = require("./services/products");
 const reviewRoutes = require("./services/reviews");
 const problematicRoutes = require("./services/problematicRoutes");
-//const filesRouter = require("./services/files");
+
 const {
     notFoundHandler,
     unauthorizedHandler,
@@ -31,7 +31,6 @@ server.use(express.static(publicFolderPath))
 server.use("/problems", problematicRoutes)
 server.use("/products", productRoutes)
 server.use("/reviews", reviewRoutes)
-// server.use("/files", filesRouter)
 server.use(notFoundHandler)
 server.use(unauthorizedHandler)
 server.use(forbiddenHandler)
