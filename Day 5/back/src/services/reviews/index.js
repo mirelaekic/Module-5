@@ -2,12 +2,12 @@ const express = require("express")
 const path = require("path")
 const uniqid = require("uniqid")
 const { readDB, writeDB } = require("../../lib/utilities")
-
 const { check, validationResult } = require("express-validator")
 
 const router = express.Router()
 
 const reviewsFilePath = path.join(__dirname, "reviews.json")
+const productsFilePath = path.join(__dirname, "../services/products.json")
 
 router.get("/:id", async (req, res, next) => {
   try {
@@ -47,27 +47,27 @@ router.post(
   "/",
   [
     check("name")
-      .isLength({ min: 4 })
-      .withMessage("Name too short!")
+      .isLength({ min: 3 })
+      .withMessage("name too short!")
       .exists()
       .withMessage("Insert a name please!"),
   ],
   [
-    check("description")
+    check("comment")
       .isLength({ min: 4 })
-      .withMessage("Description too short!")
+      .withMessage("Comment too short!")
       .exists()
-      .withMessage("Insert description please!"),
+      .withMessage("Insert a comment please!"),
   ],
   [
-    check("brand")
+    check("rate")
       .exists()
-      .withMessage("Insert brand please!"),
+      .withMessage("Please rate a product!"),
   ],
   [
-    check("price")
+    check("elementId")
       .exists()
-      .withMessage("Insert price please!"),
+      .withMessage("Please add the product ID"),
   ],
   async (req, res, next) => {
     try {
@@ -93,6 +93,7 @@ router.post(
         res.status(201).send({ id: newreview.ID })
       }
     } catch (error) {
+        console.log(error)
       next(error)
     }
   }

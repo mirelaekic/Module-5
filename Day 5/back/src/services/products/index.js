@@ -8,13 +8,16 @@ const { check, validationResult } = require("express-validator")
 const router = express.Router()
 
 const productsFilePath = path.join(__dirname, "products.json")
+const reviewsFilePath = path.join(__dirname, '../products/reviews.json')
 
 router.get("/:id", async (req, res, next) => {
   try {
     const productsDB = await readDB(productsFilePath)
     const product = productsDB.filter(product => product.ID === req.params.id)
+    const reviews = await readDB(reviewsFilePath)
+    const filteredReviews = reviews.filter(r => r.elementId === product.ID)
     if (product.length > 0) {
-      res.send(product)
+      res.send({...product, product: filteredReviews})
     } else {
       const err = new Error()
       err.httpStatusCode = 404
@@ -129,5 +132,12 @@ router.put("/:id", async (req, res, next) => {
     next(error)
   }
 })
+
+
+
+
+//const products =read products.josn
+// const reviews = read reviews.json
+
 
 module.exports = router
