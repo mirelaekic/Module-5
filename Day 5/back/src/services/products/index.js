@@ -14,13 +14,13 @@ const productsFilePath = path.join(__dirname, "products.json")
 const reviewsFilePath = path.join(__dirname, '../reviews/reviews.json')
 const productsFolderPath = join(__dirname, "../../../public/img/products")
 
-router.post("/:id/upload", upload.single("product"), async (req, res, next) => {
+router.post("/:id/upload", upload.single("image"), async (req, res, next) => {
   try {
     await writeFile(
       join(productsFolderPath, req.file.originalname),
       req.file.buffer
     )
-    res.send("ok")
+    res.send("Picture uploaded!")
   } catch (error) {
     console.log(error)
     next(error)
@@ -49,7 +49,7 @@ router.get("/:id/reviews", async (req, res, next) => {
     const reviews = await readDB(reviewsFilePath)
     const filteredReviews = reviews.filter(r => r.elementId === req.params.id)
     if (filteredReviews.length > 0) {
-      res.send({...product,filteredReviews})
+      res.send({...product,reviews: filteredReviews})
     } else {
       const err = new Error()
       err.httpStatusCode = 404
